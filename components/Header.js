@@ -11,7 +11,7 @@ function Header() {
     const [password, setPassword] = useState('');
 
     onAuthStateChanged(auth, (authUser) => {
-        if (authUser?.uid === 'mUXn3ZIIvxR79MGnJ5YXUVPhYUq2') {
+        if (authUser?.uid === 'pi432vbBF1YKLPC7KYl4twAelOu1') {
             setIsAdmin(true);
         }
     })
