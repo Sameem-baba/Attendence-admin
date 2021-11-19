@@ -16,7 +16,6 @@ function TeacherDashboard() {
                     collection(db, 'attendence', 'user', 'present'),
                 ),
                 snapshot => setPresent(snapshot.docs)
-
             ),
         [db]
     );
