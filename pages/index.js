@@ -1,7 +1,6 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import Head from 'next/head'
 import { useRouter } from 'next/router';
-import { useState } from 'react/cjs/react.production.min';
 import Login from '../components/Login'
 import { auth } from '../firebase';
 
