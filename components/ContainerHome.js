@@ -1,58 +1,62 @@
-import CardDate from "./CardDate"
-import Image from 'next/image';
+import CardDate from "./CardDate";
+import Image from "next/image";
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, query } from "@firebase/firestore";
 import { db } from "../firebase";
+import { useRecoilState } from "recoil";
+import { modalState } from "../atoms/ModalAtom";
 
 function ContainerHome() {
-    const [present, setPresent] = useState([]);
+  const [present, setPresent] = useState([]);
+  const [open, setOpen] = useRecoilState(modalState);
 
-    useEffect(
-        () =>
-            onSnapshot(
-                query(
-                    collection(db, 'attendence'),
-                ),
-                snapshot => setPresent(snapshot.docs)
+  useEffect(
+    () =>
+      onSnapshot(
+        query(collection(db, "attendence", "user", "present")),
+        (snapshot) => setPresent(snapshot.docs)
+      ),
+    [db]
+  );
 
-            ),
-        [db]
-    );
+  let now = new Date();
+  //console.log(now);
+  let day = now.getDate();
+  let month = now.getMonth() + 1;
+  let year = now.getFullYear();
 
-    let now = new Date();
-	//console.log(now);
-	let day = now.getDate();
-	let month = now.getMonth()+1;
-	let year = now.getFullYear();
+  let today = day + "/" + month + "/" + year;
 
-    let today = day + "/" + month + "/" + year;
-
-    return (
-        <div className='relative h-screen'>
-            <div className='w-screen'>
-                <Image src='https://ak.picdn.net/shutterstock/videos/20344780/thumb/1.jpg'
-                    layout='fill'
-                />
-            </div>
-            <div className='absolute px-20 z-20 text-center justify-center w-full py-1 flex items-center space-x-5 mt-5'>
-                <p className='text-gray-400 text-lg '>Attendence</p>
-                <p className='font-bold text-white text-2xl '>Management</p>
-            </div>
-            <div className='flex absolute text-center z-20 w-full top-20 justify-center items-center'>
-                <CardDate title='Date' description={today}/>
-            </div>
-            <div className='flex -ml-30 absolute text-center z-20 w-full top-20 justify-center items-center mt-10'>
-                <Card title='Total Strength' description='38'/>
-            </div>
-            <div className='flex absolute  text-center z-20 w-full top-48 left-10 justify-center items-center mt-20'>
-                <Card title='Present' description={present.length}/>
-            </div>
-            <div className='flex absolute  text-center z-20 w-full top-96 left-10 justify-center items-center mt-20'>
-                <Card title='Absent' description={38 - present.length}/>
-            </div>
-        </div>
-    )
+  return (
+    <div className="relative h-screen">
+      <div className="w-screen">
+        <Image
+          src="https://ak.picdn.net/shutterstock/videos/20344780/thumb/1.jpg"
+          layout="fill"
+        />
+      </div>
+      <div className="absolute px-20 z-20 text-center justify-center w-full py-1 flex items-center space-x-5 mt-5">
+        <p className="text-gray-400 text-lg ">Attendence</p>
+        <p className="font-bold text-white text-2xl ">Management</p>
+      </div>
+      <div className="flex absolute text-center z-20 w-full top-20 justify-center items-center">
+        <CardDate title="Date" description={today} />
+      </div>
+      <div className="flex -ml-30 absolute text-center z-20 w-full top-20 justify-center items-center mt-10">
+        <Card title="Total Strength" description="38" />
+      </div>
+      <div
+        onClick={() => setOpen(true)}
+        className="flex absolute  text-center z-20 w-full top-48  justify-center items-center mt-20"
+      >
+        <Card title="Present" description={present.length} />
+      </div>
+      <div className="flex absolute  text-center z-20 w-full top-96 justify-center items-center mt-20">
+        <Card title="Absent" description={38 - present.length} />
+      </div>
+    </div>
+  );
 }
 
-export default ContainerHome
+export default ContainerHome;
