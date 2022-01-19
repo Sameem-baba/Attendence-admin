@@ -33,12 +33,19 @@ function AddUser() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div
+      className="flex flex-col items-center justify-center min-h-screen py-2"
+      style={{
+        backgroundSize: "cover",
+        backgroundImage: `url("https://ak.picdn.net/shutterstock/videos/20344780/thumb/1.jpg")`,
+        backgroundPosition: "center center",
+      }}
+    >
       <Sidebar />
 
       <main className="flex flex-col items-center justify-center w-2/3 flex-1 text-center">
-        <div className="bg-white rounded-3xl shadow-2xl flex w-2/3 max-w-4xl">
-          <div className="w-3/5 text-center flex flex-col p-5">
+        <div className="bg-white rounded-3xl justify-center shadow-2xl flex w-2/3 max-w-4xl text-center">
+          <div className="w-3/5 text-center flex flex-col p-5 ">
             <div
               className="text-center font-bold"
               onClick={() => router.push("/")}
